@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
 	"io"
-	"log"
 	"strings"
 )
 
@@ -18,19 +17,6 @@ func NewParser(rd io.Reader) *Parser {
 }
 
 func (p *Parser) Parse() (entity.Request, error) {
-
-	for {
-		b, err := p.reader.ReadByte()
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			} else {
-				log.Fatal(err)
-			}
-		}
-		fmt.Printf("byte: %v | string: %v\n", b, string(b))
-	}
-
 	method, target, version, err := p.readRequestLine(p.reader)
 	if err != nil && err != io.EOF {
 		fmt.Println("Error: ", err)
