@@ -32,7 +32,7 @@ func (p *Parser) Parse() (entity.Request, error) {
 	}
 
 	method, target, version, err := p.readRequestLine(p.reader)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		fmt.Println("Error: ", err)
 		return entity.Request{}, err
 	}
@@ -42,7 +42,7 @@ func (p *Parser) Parse() (entity.Request, error) {
 	fmt.Println("Version: ", version)
 
 	headers, err := p.readHeaders(p.reader)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return entity.Request{}, err
 	}
 
