@@ -18,6 +18,19 @@ func NewParser(rd io.Reader) *Parser {
 }
 
 func (p *Parser) Parse() (req *entity.Request, err error) {
+
+	for {
+		b, err := p.reader.ReadByte()
+		if err != nil {
+			if err.Error() == "EOF" {
+				break
+			} else {
+				log.Fatal(err)
+			}
+		}
+		fmt.Printf("byte: %v | string: %v\n", b, string(b))
+	}
+
 	method, target, version, err := p.readRequestLine(p.reader)
 
 	if err != nil {
@@ -81,18 +94,6 @@ func (p *Parser) readHeaders(reader *bufio.Reader) (headers map[string]string, e
 }
 
 func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
-	for {
-		b, err := reader.ReadByte()
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			} else {
-				log.Fatal(err)
-			}
-		}
-		fmt.Printf("byte: %v | string: %v\n", b, string(b))
-	}
-
 	var tmp []byte
 	var isPrefix bool
 	for {
