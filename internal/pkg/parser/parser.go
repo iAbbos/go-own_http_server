@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
 	"io"
+	"log"
 	"strings"
 )
 
@@ -81,6 +82,19 @@ func (p *Parser) readHeaders(reader *bufio.Reader) (headers map[string]string, e
 
 func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
 	fmt.Println("reader", reader)
+
+	for {
+		b, err := reader.ReadByte()
+		if err != nil {
+			if err.Error() == "EOF" {
+				break
+			} else {
+				log.Fatal(err)
+			}
+		}
+		fmt.Printf("%x ", b)
+	}
+
 	var tmp []byte
 	var isPrefix bool
 	for {
