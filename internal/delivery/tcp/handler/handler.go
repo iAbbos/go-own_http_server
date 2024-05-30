@@ -24,17 +24,25 @@ func HandleConnection(option HandleOption) error {
 		return err
 	}
 
-	writer := writer.NewWriter(option.Conn)
+	newWriter := writer.NewWriter(option.Conn)
 
 	var res *entity.Response
 	switch req.Method {
+	case types.METHOD_GET:
+		switch req.Target {
+		case "/":
+			res = usecase.BaseResponse()
+		}
 	case types.METHOD_POST:
-	// Do something
+		// TODO: Implement POST method
 	default:
 		res = usecase.BadRequestError()
 	}
 
-	writer.Write(res)
+	err = newWriter.Write(res)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
