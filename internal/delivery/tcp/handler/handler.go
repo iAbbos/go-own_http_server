@@ -31,7 +31,7 @@ func HandleConnection(option HandleOption) error {
 
 	switch req.Method {
 	case types.METHOD_GET:
-		if strings.HasPrefix(req.Target, "/") {
+		if req.Target == "/" {
 			res = usecase.BaseResponse()
 		} else if strings.HasPrefix(req.Target, "/echo/") {
 			res = usecase.NotFoundError()
