@@ -1,6 +1,9 @@
 package entity
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/codecrafters-io/http-server-starter-go/internal/entity/types"
+)
 
 type Response struct {
 	Version       string
@@ -18,7 +21,7 @@ func NewResponse() *Response {
 
 func (r *Response) Marshal() []byte {
 	res := make([]byte, 0)
-	startLine := []byte(fmt.Sprintf("HTTP/1.1 %d %s\r\n", r.StatusCode, r.StatusMessage))
+	startLine := []byte(fmt.Sprintf("%s %d %s\r\n", types.VERSION_1_1, r.StatusCode, r.StatusMessage))
 	res = append(res, startLine...)
 
 	if r.Body != nil {
