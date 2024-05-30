@@ -29,19 +29,20 @@ func HandleConnection(option HandleOption) error {
 
 	var res *entity.Response
 
-	switch req.Method {
-	case types.METHOD_GET:
-		if req.Target == "/" {
-			res = usecase.BaseResponse()
-		} else if strings.HasPrefix(req.Target, "/echo/") {
-			res = usecase.Echo(req.Target)
-		} else if strings.HasPrefix(req.Target, "/user-agent") {
-			res = usecase.UserAgent(req.Headers)
-		} else {
-			res = usecase.NotFoundError()
+	if req.Target == "/" {
+		res = usecase.BaseResponse()
+	} else if strings.HasPrefix(req.Target, "/echo/") {
+		res = usecase.Echo(req.Target)
+	} else if strings.HasPrefix(req.Target, "/user-agent") {
+		res = usecase.UserAgent(req.Headers)
+	} else if strings.HasPrefix(req.Target, "/files/") {
+		switch req.Method {
+		case types.METHOD_GET:
+			dir := option.Config.FilesDir
+			res = usecase.CheckFile(req.Target, dir)
 		}
-	default:
-		res = usecase.BadRequestError()
+	} else {
+		res = usecase.NotFoundError()
 	}
 
 	err = newWriter.Write(res)
