@@ -9,6 +9,7 @@ import (
 	"github.com/codecrafters-io/http-server-starter-go/internal/usecase"
 	"io"
 	"net"
+	"strings"
 )
 
 type HandleOption struct {
@@ -28,16 +29,16 @@ func HandleConnection(option HandleOption) error {
 
 	var res *entity.Response
 
-	if req.Method == types.METHOD_GET {
-		switch req.Target {
-		case "/":
+	switch req.Method {
+	case types.METHOD_GET:
+		if strings.HasPrefix(req.Target, "/") {
 			res = usecase.BaseResponse()
-		case "/echo/":
-			res = usecase.Echo(req.Target)
-		default:
+		} else if strings.HasPrefix(req.Target, "/echo/") {
+			res = usecase.NotFoundError()
+		} else {
 			res = usecase.NotFoundError()
 		}
-	} else {
+	default:
 		res = usecase.BadRequestError()
 	}
 
