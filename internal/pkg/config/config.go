@@ -24,7 +24,7 @@ func NewConfig() (*Config, error) {
 	config.Server.Host = getEnv("SERVER_HOST", "localhost")
 	config.Server.Port = getEnv("SERVER_PORT", ":4221")
 
-	dir := flag.String("dir", "", "The path to the directory where the files are stored.")
+	dir := flag.String("directory", "", "The path to the directory where the files are stored.")
 	flag.Parse()
 
 	config.FilesDir = *dir
