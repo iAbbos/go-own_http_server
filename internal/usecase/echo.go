@@ -1,13 +1,11 @@
 package usecase
 
 import (
-	"fmt"
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
 	"strings"
 )
 
 func Echo(target string) *entity.Response {
-	fmt.Println(target)
 	msg := strings.TrimPrefix(target, "/echo/")
 
 	resp := entity.NewResponse()

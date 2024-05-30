@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity/types"
 	configpkg "github.com/codecrafters-io/http-server-starter-go/internal/pkg/config"
@@ -32,11 +31,10 @@ func HandleConnection(option HandleOption) error {
 
 	switch req.Method {
 	case types.METHOD_GET:
-		fmt.Println(req.Target)
 		if req.Target == "/" {
 			res = usecase.BaseResponse()
 		} else if strings.HasPrefix(req.Target, "/echo/") {
-			res = usecase.NotFoundError()
+			res = usecase.Echo(req.Target)
 		} else {
 			res = usecase.NotFoundError()
 		}
