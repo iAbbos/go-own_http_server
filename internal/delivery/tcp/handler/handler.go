@@ -32,6 +32,8 @@ func HandleConnection(option HandleOption) error {
 		switch req.Target {
 		case "/":
 			res = usecase.BaseResponse()
+		case "/echo/":
+			res = usecase.Echo(req.Target)
 		default:
 			res = usecase.NotFoundError()
 		}
