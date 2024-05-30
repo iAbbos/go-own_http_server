@@ -1,9 +1,12 @@
 package handler
 
 import (
-	"fmt"
+	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
+	"github.com/codecrafters-io/http-server-starter-go/internal/entity/types"
 	configpkg "github.com/codecrafters-io/http-server-starter-go/internal/pkg/config"
 	"github.com/codecrafters-io/http-server-starter-go/internal/pkg/parser"
+	"github.com/codecrafters-io/http-server-starter-go/internal/pkg/writer"
+	"github.com/codecrafters-io/http-server-starter-go/internal/usecase"
 	"io"
 	"net"
 )
@@ -18,17 +21,20 @@ func HandleConnection(option HandleOption) error {
 	prs := parser.NewParser(option.Conn)
 	req, err := prs.Parse()
 	if err != nil && err != io.EOF {
-		fmt.Println("stage2")
 		return err
 	}
 
-	fmt.Println("Request: ", req)
+	writer := writer.NewWriter(option.Conn)
 
-	//writer := writer.NewWriter(option.Conn)
-	//
-	//
-	//
-	//writer.Write(res)
+	var res *entity.Response
+	switch req.Method {
+	case types.METHOD_POST:
+	// Do something
+	default:
+		res = usecase.BadRequestError()
+	}
+
+	writer.Write(res)
 
 	return nil
 }

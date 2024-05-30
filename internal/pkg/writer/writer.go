@@ -13,10 +13,10 @@ func NewWriter(w io.Writer) *Writer {
 	return &Writer{writer: w}
 }
 
-func (w *Writer) Write(v entity.Response) error {
-	var bytes = v.Marshal()
+func (w *Writer) Write(resp *entity.Response) error {
+	res := resp.Marshal()
 
-	_, err := w.writer.Write(bytes)
+	_, err := w.writer.Write(res)
 	if err != nil {
 		return err
 	}

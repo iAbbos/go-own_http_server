@@ -7,7 +7,7 @@ type Request struct {
 	Target  string
 	Version string
 	Headers map[string]string
-	Body    io.Reader
+	Reader  io.Reader
 }
 
 func (r *Request) Marshal() []byte {

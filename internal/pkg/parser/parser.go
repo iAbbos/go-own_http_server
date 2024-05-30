@@ -17,40 +17,44 @@ func NewParser(rd io.Reader) *Parser {
 }
 
 func (p *Parser) Parse() (entity.Request, error) {
+
+	//for {
+	//	b, err := p.reader.ReadByte()
+	//	if err != nil {
+	//		if err.Error() == "EOF" {
+	//			break
+	//		} else {
+	//			log.Fatal(err)
+	//		}
+	//	}
+	//	fmt.Printf("byte: %v | string: %v\n", b, string(b))
+	//}
+
 	method, target, version, err := p.readRequestLine(p.reader)
 	if err != nil && err != io.EOF {
-		fmt.Println("Error: ", err)
 		return entity.Request{}, err
 	}
-
-	fmt.Println("Method: ", method)
-	fmt.Println("Target: ", target)
-	fmt.Println("Version: ", version)
 
 	headers, err := p.readHeaders(p.reader)
 	if err != nil && err != io.EOF {
 		return entity.Request{}, err
 	}
 
-	fmt.Println("Headers: ", headers)
-
 	return entity.Request{
 		Method:  method,
 		Target:  target,
 		Version: version,
 		Headers: headers,
-		Body:    p.reader,
+		Reader:  p.reader,
 	}, nil
 }
 
 func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target string, httpVersion string, err error) {
 	line, err := p.readLine(reader)
-	fmt.Println("Line: ", line)
 	if err != nil {
 		return
 	}
 	requestLine := strings.Split(line, " ")
-	fmt.Println("Request Line: ", requestLine)
 	if len(requestLine) != 3 {
 		err = fmt.Errorf("invalid request line")
 		return
