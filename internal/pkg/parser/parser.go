@@ -59,10 +59,12 @@ func (p *Parser) Parse() (entity.Request, error) {
 
 func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target string, httpVersion string, err error) {
 	line, err := p.readLine(reader)
+	fmt.Println("Line: ", line)
 	if err != nil {
 		return
 	}
 	requestLine := strings.Split(line, " ")
+	fmt.Println("Request Line: ", requestLine)
 	if len(requestLine) != 3 {
 		err = fmt.Errorf("invalid request line")
 		return
@@ -70,11 +72,6 @@ func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target st
 	method = strings.ToUpper(requestLine[0])
 	target = requestLine[1]
 	httpVersion = requestLine[2]
-
-	fmt.Println("Method: ", method)
-	fmt.Println("Target: ", target)
-	fmt.Println("Version: ", httpVersion)
-
 	return
 }
 
