@@ -41,15 +41,13 @@ func (p *Parser) Parse() (entity.Request, error) {
 		return entity.Request{}, err
 	}
 
-	req := entity.Request{
+	return entity.Request{
 		Method:  method,
 		Target:  target,
 		Version: version,
 		Headers: headers,
 		Body:    p.reader,
-	}
-
-	return req, nil
+	}, nil
 }
 
 func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target string, httpVersion string, err error) {
