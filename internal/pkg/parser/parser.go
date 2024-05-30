@@ -81,8 +81,6 @@ func (p *Parser) readHeaders(reader *bufio.Reader) (headers map[string]string, e
 }
 
 func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
-	fmt.Println("reader", reader)
-
 	for {
 		b, err := reader.ReadByte()
 		if err != nil {
@@ -92,7 +90,7 @@ func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
 				log.Fatal(err)
 			}
 		}
-		fmt.Printf("%x ", b)
+		fmt.Printf("byte: %v | string: %v ", b, string(b))
 	}
 
 	var tmp []byte
