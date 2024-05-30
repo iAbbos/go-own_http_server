@@ -17,7 +17,7 @@ func NewParser(rd io.Reader) *Parser {
 	return &Parser{reader: bufio.NewReader(rd)}
 }
 
-func (p *Parser) Parse() (req *entity.Request, err error) {
+func (p *Parser) Parse() (entity.Request, error) {
 
 	for {
 		b, err := p.reader.ReadByte()
@@ -32,26 +32,24 @@ func (p *Parser) Parse() (req *entity.Request, err error) {
 	}
 
 	method, target, version, err := p.readRequestLine(p.reader)
-
 	if err != nil {
-		return
+		return entity.Request{}, err
 	}
 
 	headers, err := p.readHeaders(p.reader)
 	if err != nil {
-		return
+		return entity.Request{}, err
 	}
 
-	req = &entity.Request{
+	req := entity.Request{
 		Method:  method,
 		Target:  target,
 		Version: version,
 		Headers: headers,
-		Reader:  p.reader,
+		Body:    p.reader,
 	}
 
-	return
-
+	return req, nil
 }
 
 func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target string, httpVersion string, err error) {

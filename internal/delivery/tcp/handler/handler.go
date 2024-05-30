@@ -4,6 +4,7 @@ import (
 	"fmt"
 	configpkg "github.com/codecrafters-io/http-server-starter-go/internal/pkg/config"
 	"github.com/codecrafters-io/http-server-starter-go/internal/pkg/parser"
+	"io"
 	"net"
 )
 
@@ -16,11 +17,11 @@ func HandleConnection(option HandleOption) error {
 	defer option.Conn.Close()
 	prs := parser.NewParser(option.Conn)
 	req, err := prs.Parse()
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return err
 	}
 
-	fmt.Println(req)
+	fmt.Println("Request: ", req)
 
 	//writer := writer.NewWriter(option.Conn)
 	//
