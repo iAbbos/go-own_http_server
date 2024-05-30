@@ -36,10 +36,12 @@ func HandleConnection(option HandleOption) error {
 	} else if strings.HasPrefix(req.Target, "/user-agent") {
 		res = usecase.UserAgent(req.Headers)
 	} else if strings.HasPrefix(req.Target, "/files/") {
+		dir := option.Config.FilesDir
 		switch req.Method {
 		case types.METHOD_GET:
-			dir := option.Config.FilesDir
 			res = usecase.CheckFile(req.Target, dir)
+		case types.METHOD_POST:
+			res = usecase.SaveFile(req, dir)
 		}
 	} else {
 		res = usecase.NotFoundError()
