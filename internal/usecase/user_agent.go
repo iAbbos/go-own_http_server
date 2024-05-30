@@ -4,8 +4,8 @@ import (
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
 )
 
-func UserAgent(headers map[string]string) *entity.Response {
-	userAgent := headers["User-Agent"]
+func UserAgent(reqHeaders map[string]string) *entity.Response {
+	userAgent := reqHeaders["User-Agent"]
 
 	resp := entity.NewResponse()
 
