@@ -39,7 +39,7 @@ func SaveFile(req entity.Request, dir string) *entity.Response {
 	resp := entity.NewResponse()
 
 	resp.SetVersion("HTTP/1.1")
-	resp.SetStatus(http.StatusCreated, "OK")
+	resp.SetStatus(http.StatusCreated, "Created")
 
 	return resp
 }
