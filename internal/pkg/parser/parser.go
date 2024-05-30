@@ -36,10 +36,16 @@ func (p *Parser) Parse() (entity.Request, error) {
 		return entity.Request{}, err
 	}
 
+	fmt.Println("Method: ", method)
+	fmt.Println("Target: ", target)
+	fmt.Println("Version: ", version)
+
 	headers, err := p.readHeaders(p.reader)
 	if err != nil {
 		return entity.Request{}, err
 	}
+
+	fmt.Println("Headers: ", headers)
 
 	return entity.Request{
 		Method:  method,

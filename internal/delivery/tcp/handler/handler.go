@@ -22,8 +22,6 @@ func HandleConnection(option HandleOption) error {
 		return err
 	}
 
-	fmt.Println(req.Version)
-
 	fmt.Println("Request: ", req)
 
 	//writer := writer.NewWriter(option.Conn)
