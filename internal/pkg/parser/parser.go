@@ -50,27 +50,9 @@ func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target st
 		err = fmt.Errorf("invalid request line")
 		return
 	}
-	// TODO: remove
-	fmt.Println("requestLine", requestLine)
 	method = strings.ToUpper(requestLine[0])
 	target = requestLine[1]
 	httpVersion = requestLine[2]
-	return
-}
-
-func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
-	var tmp []byte
-	var isPrefix bool
-	for {
-		tmp, isPrefix, err = reader.ReadLine()
-		if err != nil {
-			return
-		}
-		line += string(tmp)
-		if !isPrefix {
-			break
-		}
-	}
 	return
 }
 
@@ -93,6 +75,23 @@ func (p *Parser) readHeaders(reader *bufio.Reader) (headers map[string]string, e
 		header[0] = strings.TrimSpace(header[0])
 		header[1] = strings.TrimSpace(header[1])
 		headers[header[0]] = header[1]
+	}
+	return
+}
+
+func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
+	fmt.Println("reader", reader)
+	var tmp []byte
+	var isPrefix bool
+	for {
+		tmp, isPrefix, err = reader.ReadLine()
+		if err != nil {
+			return
+		}
+		line += string(tmp)
+		if !isPrefix {
+			break
+		}
 	}
 	return
 }
