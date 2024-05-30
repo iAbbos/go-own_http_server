@@ -90,7 +90,7 @@ func (p *Parser) readLine(reader *bufio.Reader) (line string, err error) {
 				log.Fatal(err)
 			}
 		}
-		fmt.Printf("byte: %v | string: %v ", b, string(b))
+		fmt.Printf("byte: %v | string: %v\n", b, string(b))
 	}
 
 	var tmp []byte
