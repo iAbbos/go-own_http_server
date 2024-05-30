@@ -17,7 +17,9 @@ func HandleConnection(option HandleOption) error {
 	defer option.Conn.Close()
 	prs := parser.NewParser(option.Conn)
 	req, err := prs.Parse()
+	fmt.Println("stage1")
 	if err != nil && err != io.EOF {
+		fmt.Println("stage2")
 		return err
 	}
 
