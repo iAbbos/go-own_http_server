@@ -50,6 +50,8 @@ func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target st
 		err = fmt.Errorf("invalid request line")
 		return
 	}
+	// TODO: remove
+	fmt.Println("requestLine", requestLine)
 	method = strings.ToUpper(requestLine[0])
 	target = requestLine[1]
 	httpVersion = requestLine[2]
