@@ -23,7 +23,6 @@ func SaveFile(req entity.Request, dir string) *entity.Response {
 
 	buff := make([]byte, 4*1024)
 	for length > 0 {
-		println("length", length)
 		n, err := req.Reader.Read(buff)
 		length -= n
 		if err != nil {
