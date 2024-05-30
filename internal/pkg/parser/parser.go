@@ -33,6 +33,7 @@ func (p *Parser) Parse() (entity.Request, error) {
 
 	method, target, version, err := p.readRequestLine(p.reader)
 	if err != nil {
+		fmt.Println("Error: ", err)
 		return entity.Request{}, err
 	}
 
