@@ -35,6 +35,8 @@ func HandleConnection(option HandleOption) error {
 			res = usecase.BaseResponse()
 		} else if strings.HasPrefix(req.Target, "/echo/") {
 			res = usecase.Echo(req.Target)
+		} else if strings.HasPrefix(req.Target, "/user-agent") {
+			res = usecase.UserAgent(req.Headers)
 		} else {
 			res = usecase.NotFoundError()
 		}
