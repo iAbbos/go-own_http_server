@@ -70,6 +70,11 @@ func (p *Parser) readRequestLine(reader *bufio.Reader) (method string, target st
 	method = strings.ToUpper(requestLine[0])
 	target = requestLine[1]
 	httpVersion = requestLine[2]
+
+	fmt.Println("Method: ", method)
+	fmt.Println("Target: ", target)
+	fmt.Println("Version: ", httpVersion)
+
 	return
 }
 
