@@ -18,7 +18,7 @@ func Echo(req entity.Request) *entity.Response {
 
 	encoding, ok := req.Headers["Accept-Encoding"]
 	if strings.Contains(encoding, "gzip") && ok {
-		resp.SetHeader("Content-Encoding", encoding)
+		resp.SetHeader("Content-Encoding", "gzip")
 	}
 
 	resp.SetBody([]byte(msg))
