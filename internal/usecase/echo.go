@@ -5,7 +5,9 @@ import (
 	"strings"
 )
 
-func Echo(target string) *entity.Response {
+func Echo(req entity.Request) *entity.Response {
+	target := req.Target
+
 	msg := strings.TrimPrefix(target, "/echo/")
 
 	resp := entity.NewResponse()
@@ -13,6 +15,12 @@ func Echo(target string) *entity.Response {
 	resp.SetVersion("HTTP/1.1")
 	resp.SetStatus(200, "OK")
 	resp.SetHeader("Content-Type", "text/plain")
+
+	encoding, ok := req.Headers["Accept-Encoding"]
+	if encoding == "gzip" && ok {
+		resp.SetHeader("Accept-Encoding", encoding)
+	}
+
 	resp.SetBody([]byte(msg))
 
 	return resp

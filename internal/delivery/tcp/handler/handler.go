@@ -32,7 +32,7 @@ func HandleConnection(option HandleOption) error {
 	if req.Target == "/" {
 		res = usecase.BaseResponse()
 	} else if strings.HasPrefix(req.Target, "/echo/") {
-		res = usecase.Echo(req.Target)
+		res = usecase.Echo(req)
 	} else if strings.HasPrefix(req.Target, "/user-agent") {
 		res = usecase.UserAgent(req.Headers)
 	} else if strings.HasPrefix(req.Target, "/files/") {
