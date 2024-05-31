@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"bytes"
+	"compress/gzip"
 	"github.com/codecrafters-io/http-server-starter-go/internal/entity"
 	"strings"
 )
@@ -18,10 +20,15 @@ func Echo(req entity.Request) *entity.Response {
 
 	encoding, ok := req.Headers["Accept-Encoding"]
 	if strings.Contains(encoding, "gzip") && ok {
+		var b bytes.Buffer
+		enc := gzip.NewWriter(&b)
+		enc.Write([]byte(msg))
+		enc.Close()
 		resp.SetHeader("Content-Encoding", "gzip")
+		resp.SetBody(b.Bytes())
+	} else {
+		resp.SetBody([]byte(msg))
 	}
-
-	resp.SetBody([]byte(msg))
 
 	return resp
 }
